@@ -1,0 +1,46 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Acervo de livros{% endblock %}
+
+{% block content %}
+    <section class="page-intro">
+        <p class="eyebrow"><span class="eyebrow-rule"></span> CATÁLOGO · 01</p>
+        <div class="intro-row">
+            <div>
+                <h1>Histórias que<br><em>ficam com a gente.</em></h1>
+                <p class="intro-copy">Um lugar para guardar livros, autores e tudo o que merece ser lido de novo.</p>
+            </div>
+            <a class="button button-coral" href="{% url 'author_create' %}"><span aria-hidden="true">+</span> Cadastrar autor</a>
+        </div>
+    </section>
+    <section class="collection" aria-labelledby="collection-title">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">A ESTANTE</p>
+                <h2 id="collection-title">Livros</h2>
+            </div>
+            <span class="collection-mark" aria-hidden="true">LEITURA & MEMÓRIA</span>
+        </div>
+        <div class="book-list">
+            {% for book in books %}
+                <article class="book-row">
+                    <span class="book-index">{{ forloop.counter|stringformat:"02d" }}</span>
+                    <div class="book-info">
+                        <h3>{{ book.title }}</h3>
+                        <p>por <span>{{ book.author.name }}</span></p>
+                    </div>
+                    <span class="book-arrow" aria-hidden="true">↗</span>
+                </article>
+            {% empty %}
+                <div class="empty-state">
+                    <span class="empty-mark" aria-hidden="true">✳</span>
+                    <div>
+                        <h3>A estante ainda está vazia.</h3>
+                        <p>Comece cadastrando um autor para dar vida ao acervo.</p>
+                    </div>
+                    <a href="{% url 'author_create' %}">Adicionar autor <span aria-hidden="true">→</span></a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

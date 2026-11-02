@@ -1,0 +1,42 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}{{ author.name }}{% endblock %}
+
+{% block content %}
+    <section class="author-profile">
+        <a class="back-link" href="{% url 'book_list' %}"><span aria-hidden="true">←</span> Voltar ao acervo</a>
+        <div class="profile-heading">
+            <div class="profile-monogram" aria-hidden="true">{{ author.name|first|upper }}</div>
+            <div>
+                <p class="eyebrow"><span class="eyebrow-rule"></span> AUTOR · ACERVO ENTRELINHAS</p>
+                <h1>{{ author.name }}</h1>
+                <p class="profile-nationality">{{ author.nationality|default:"Nacionalidade não informada" }}</p>
+            </div>
+        </div>
+        <section class="author-books" aria-labelledby="author-books-title">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">NA ESTANTE</p>
+                    <h2 id="author-books-title">Livros deste autor</h2>
+                </div>
+            </div>
+            <div class="book-list">
+                {% for book in author.books.all %}
+                    <article class="book-row">
+                        <span class="book-index">{{ forloop.counter|stringformat:"02d" }}</span>
+                        <div class="book-info"><h3>{{ book.title }}</h3></div>
+                        <span class="book-arrow" aria-hidden="true">↗</span>
+                    </article>
+                {% empty %}
+                    <div class="empty-state">
+                        <span class="empty-mark" aria-hidden="true">✳</span>
+                        <div>
+                            <h3>Nenhum livro por aqui ainda.</h3>
+                            <p>Os livros deste autor aparecerão nesta estante.</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </section>
+{% endblock %}
