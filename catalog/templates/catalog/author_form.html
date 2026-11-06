@@ -1,15 +1,15 @@
 {% extends "catalog/base.html" %}
 
-{% block title %}Novo autor{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block content %}
     <section class="form-page">
         <a class="back-link" href="{% url 'book_list' %}"><span aria-hidden="true">←</span> Voltar ao acervo</a>
         <div class="form-layout">
             <div class="form-intro">
-                <p class="eyebrow"><span class="eyebrow-rule"></span> NOVO REGISTRO · 02</p>
-                <h1>Todo livro<br>começa com <em>alguém.</em></h1>
-                <p>Registre uma nova voz no nosso acervo. Você pode completar a nacionalidade depois.</p>
+                <p class="eyebrow"><span class="eyebrow-rule"></span> {% if is_edit %}ATUALIZAÇÃO{% else %}NOVO REGISTRO{% endif %} · 02</p>
+                <h1>{{ heading|safe }}</h1>
+                <p>{{ description }}</p>
                 <span class="form-decoration" aria-hidden="true">“</span>
             </div>
             <div class="form-panel">
@@ -34,7 +34,7 @@
                         {{ form.nationality }}
                         {{ form.nationality.errors }}
                     </div>
-                    <button class="button button-green submit-button" type="submit">Salvar autor <span aria-hidden="true">↗</span></button>
+                    <button class="button button-green submit-button" type="submit">{{ submit_label }} <span aria-hidden="true">↗</span></button>
                 </form>
                 <p class="form-note"><span aria-hidden="true">✳</span> Um pequeno registro, uma nova história.</p>
             </div>

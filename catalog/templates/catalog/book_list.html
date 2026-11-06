@@ -11,6 +11,7 @@
                 <p class="intro-copy">Um lugar para guardar livros, autores e tudo o que merece ser lido de novo.</p>
             </div>
             <a class="button button-coral" href="{% url 'author_create' %}"><span aria-hidden="true">+</span> Cadastrar autor</a>
+            <a class="button button-green" href="{% url 'book_create' %}"><span aria-hidden="true">+</span> Cadastrar livro</a>
         </div>
     </section>
     <section class="collection" aria-labelledby="collection-title">
@@ -26,7 +27,7 @@
                 <article class="book-row">
                     <span class="book-index">{{ forloop.counter|stringformat:"02d" }}</span>
                     <div class="book-info">
-                        <h3>{{ book.title }}</h3>
+                        <h3><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></h3>
                         <p>por <span>{{ book.author.name }}</span></p>
                     </div>
                     <span class="book-arrow" aria-hidden="true">↗</span>

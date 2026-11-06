@@ -30,11 +30,15 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .wordmark-symbol { display: grid; width: 35px; height: 35px; place-items: center; color: var(--green); background: #e6c777; font: italic 22px var(--serif); }
 .wordmark-period { color: #e6c777; }
 .site-nav { display: flex; gap: 34px; align-items: center; }
+.nav-actions { display: flex; gap: 12px; align-items: center; }
 .nav-link, .nav-action { color: var(--white); font-size: 13px; text-decoration: none; }
 .nav-link { opacity: .8; }
 .nav-link:hover, .nav-action:hover { opacity: 1; }
 .nav-action { display: inline-flex; min-height: 38px; gap: 8px; align-items: center; padding: 0 14px; border: 1px solid rgb(255 253 248 / 40%); }
 .nav-action span { color: #e6c777; font-size: 19px; line-height: 1; }
+.author-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin: 28px 0 0; }
+.author-actions form { display: inline-block; margin: 0; }
+.author-actions .button { margin: 0; }
 .page-shell { min-height: calc(100vh - 150px); padding-top: 77px; padding-bottom: 88px; }
 .page-intro { padding-bottom: 74px; border-bottom: 1px solid var(--line); }
 .eyebrow { display: flex; gap: 10px; align-items: center; margin: 0 0 20px; color: var(--green-light); font-size: 10px; font-weight: 700; letter-spacing: 1.4px; }
@@ -60,6 +64,8 @@ h1, h2, h3, p { margin-top: 0; }
 .book-row:hover { padding-inline: 10px; background: rgb(255 253 248 / 55%); }
 .book-index { color: var(--coral); font: italic 16px var(--serif); }
 .book-info h3, .empty-state h3 { margin-bottom: 7px; font: 400 21px var(--serif); }
+.book-info h3 a { color: var(--ink); text-decoration: none; }
+.book-info h3 a:hover { color: var(--green-light); }
 .book-info p { margin-bottom: 0; color: var(--muted); font-size: 12px; }
 .book-info p span { color: var(--green); font-weight: 700; }
 .book-arrow { color: var(--green-light); font-size: 17px; }
@@ -99,6 +105,7 @@ h1, h2, h3, p { margin-top: 0; }
 .profile-heading .eyebrow { margin-bottom: 12px; }
 .profile-heading h1 { margin-bottom: 9px; font-size: 48px; }
 .profile-nationality { margin-bottom: 0; color: var(--muted); font-size: 13px; }
+.profile-nationality strong { color: var(--green); }
 .author-books { max-width: 850px; }
 .site-footer { display: flex; min-height: 72px; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 9px; letter-spacing: .8px; }
 .site-footer span:last-child { color: var(--green-light); font: italic 13px var(--serif); letter-spacing: 0; }
@@ -109,6 +116,7 @@ h1, h2, h3, p { margin-top: 0; }
     .wordmark { gap: 8px; font-size: 19px; }
     .wordmark-symbol { width: 31px; height: 31px; }
     .site-nav { gap: 14px; }
+    .nav-actions { gap: 8px; }
     .nav-action { min-height: 35px; gap: 5px; padding-inline: 9px; font-size: 11px; }
     .page-shell { min-height: calc(100vh - 132px); padding-top: 52px; padding-bottom: 65px; }
     .page-intro { padding-bottom: 47px; }

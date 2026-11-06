@@ -1,0 +1,44 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+    <section class="author-profile">
+        <a class="back-link" href="{% url 'book_list' %}"><span aria-hidden="true">←</span> Voltar ao acervo</a>
+        <div class="profile-heading">
+            <div class="profile-monogram" aria-hidden="true">{{ book.title|first|upper }}</div>
+            <div>
+                <p class="eyebrow"><span class="eyebrow-rule"></span> LIVRO · ACERVO ENTRELINHAS</p>
+                <h1>{{ book.title }}</h1>
+                <p class="profile-nationality">por <strong>{{ book.author.name }}</strong></p>
+            </div>
+        </div>
+
+        <div class="author-actions">
+            <a class="button button-green" href="{% url 'book_edit' book.pk %}">Editar livro</a>
+            <form method="post" action="{% url 'book_delete' book.pk %}" onsubmit="return confirm('Deseja realmente excluir este livro?');">
+                {% csrf_token %}
+                <button class="button button-coral" type="submit">Excluir livro</button>
+            </form>
+        </div>
+
+        <section class="author-books" aria-labelledby="book-author-title">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">AUTOR</p>
+                    <h2 id="book-author-title">Detalhes da obra</h2>
+                </div>
+            </div>
+            <div class="book-list">
+                <article class="book-row">
+                    <span class="book-index">01</span>
+                    <div class="book-info">
+                        <h3>{{ book.author.name }}</h3>
+                        <p><span>{{ book.author.nationality|default:"Nacionalidade não informada" }}</span></p>
+                    </div>
+                    <span class="book-arrow" aria-hidden="true">↗</span>
+                </article>
+            </div>
+        </section>
+    </section>
+{% endblock %}

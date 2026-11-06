@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Author
+from .models import Author, Book
 
 
 class AuthorForm(forms.ModelForm):
@@ -10,4 +10,14 @@ class AuthorForm(forms.ModelForm):
         labels = {
             "name": "Nome",
             "nationality": "Nacionalidade",
+        }
+
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ["title", "author"]
+        labels = {
+            "title": "Título",
+            "author": "Autor",
         }
