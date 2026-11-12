@@ -9,52 +9,38 @@ def book_list(request):
     return render(request, "catalog/book_list.html", {"books": books})
 
 
-def book_create(request):
-    if request.method == "POST":
-        form = BookForm(request.POST)
-        if form.is_valid():
-            book = form.save()
-            return redirect("book_detail", pk=book.pk)
-    else:
-        form = BookForm()
-
-    return render(
-        request,
-        "catalog/book_form.html",
-        {
-            "form": form,
-            "page_title": "Novo livro",
-            "heading": "Uma nova história<br>precisa de um <em>livro.</em>",
-            "description": "Cadastre o título e escolha o autor que vai dar vida à obra.",
-            "submit_label": "Salvar livro",
-            "is_edit": False,
-        },
-    )
-
-
-def book_edit(request, pk):
-    book = get_object_or_404(Book, pk=pk)
+def book_form(request, pk=None):
+    book = get_object_or_404(Book, pk=pk) if pk is not None else None
 
     if request.method == "POST":
         form = BookForm(request.POST, instance=book)
         if form.is_valid():
-            form.save()
-            return redirect("book_detail", pk=book.pk)
+            book = form.save()
+            return redirect("author_detail", pk=book.author.pk)
     else:
         form = BookForm(instance=book)
 
+    is_edit = book is not None
     return render(
         request,
         "catalog/book_form.html",
         {
             "form": form,
-            "page_title": "Editar livro",
-            "heading": "Atualize os dados<br>do livro.",
-            "description": "Ajuste o título ou troque o autor da obra.",
-            "submit_label": "Salvar alterações",
-            "is_edit": True,
+            "page_title": "Editar livro" if is_edit else "Novo livro",
+            "heading": "Atualize os dados<br>do livro." if is_edit else "Uma nova história<br>precisa de um <em>livro.</em>",
+            "description": "Ajuste o título, o ano, a disponibilidade e as categorias da obra." if is_edit else "Cadastre o título, escolha o autor, informe o ano e as categorias da obra.",
+            "submit_label": "Salvar alterações" if is_edit else "Salvar livro",
+            "is_edit": is_edit,
         },
     )
+
+
+def book_create(request):
+    return book_form(request)
+
+
+def book_edit(request, pk):
+    return book_form(request, pk=pk)
 
 
 def book_delete(request, pk):

@@ -16,6 +16,7 @@
 
         <div class="author-actions">
             <a class="button button-green" href="{% url 'author_edit' author.pk %}">Editar autor</a>
+            <a class="button button-green" href="{% url 'book_create' %}">Novo livro</a>
             <form method="post" action="{% url 'author_delete' author.pk %}" onsubmit="return confirm('Deseja realmente excluir este autor?');">
                 {% csrf_token %}
                 <button class="button button-coral" type="submit">Excluir autor</button>
@@ -33,8 +34,13 @@
                 {% for book in author.books.all %}
                     <article class="book-row">
                         <span class="book-index">{{ forloop.counter|stringformat:"02d" }}</span>
-                        <div class="book-info"><h3>{{ book.title }}</h3></div>
-                        <span class="book-arrow" aria-hidden="true">↗</span>
+                        <div class="book-info">
+                            <h3><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></h3>
+                        </div>
+                        <div class="book-actions">
+                            <a class="link-button" href="{% url 'book_edit' book.pk %}">Editar</a>
+                            <span class="book-arrow" aria-hidden="true">↗</span>
+                        </div>
                     </article>
                 {% empty %}
                     <div class="empty-state">

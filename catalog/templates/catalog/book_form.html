@@ -35,6 +35,24 @@
                         {{ form.author }}
                         {{ form.author.errors }}
                     </div>
+                    <div class="form-field{% if form.year.errors %} has-error{% endif %}">
+                        {{ form.year.label_tag }}
+                        <span class="required-mark" aria-hidden="true">*</span>
+                        {{ form.year }}
+                        {{ form.year.errors }}
+                    </div>
+                    <div class="form-field checkbox-field{% if form.available.errors %} has-error{% endif %}">
+                        {{ form.available.label_tag }}
+                        {{ form.available }}
+                        {{ form.available.errors }}
+                    </div>
+                    <div class="form-field{% if form.categories.errors %} has-error{% endif %}">
+                        {{ form.categories.label_tag }}
+                        <div class="checkbox-list">
+                            {{ form.categories }}
+                        </div>
+                        {{ form.categories.errors }}
+                    </div>
                     <button class="button button-green submit-button" type="submit">{{ submit_label }} <span aria-hidden="true">↗</span></button>
                 </form>
                 <p class="form-note"><span aria-hidden="true">✳</span> Um título, um autor, uma boa leitura.</p>

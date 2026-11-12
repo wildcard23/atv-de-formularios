@@ -34,7 +34,9 @@
                     <span class="book-index">01</span>
                     <div class="book-info">
                         <h3>{{ book.author.name }}</h3>
-                        <p><span>{{ book.author.nationality|default:"Nacionalidade não informada" }}</span></p>
+                        <p><span>Ano: {{ book.year }}</span></p>
+                        <p><span>Disponível: {% if book.available %}Sim{% else %}Não{% endif %}</span></p>
+                        <p><span>Categorias: {% if book.categories.all %}{% for category in book.categories.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% empty %}Sem categoria{% endfor %}{% else %}Sem categoria{% endif %}</span></p>
                     </div>
                     <span class="book-arrow" aria-hidden="true">↗</span>
                 </article>

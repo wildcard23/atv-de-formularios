@@ -30,7 +30,10 @@
                         <h3><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></h3>
                         <p>por <span>{{ book.author.name }}</span></p>
                     </div>
-                    <span class="book-arrow" aria-hidden="true">↗</span>
+                    <div class="book-actions">
+                        <a class="link-button" href="{% url 'book_edit' book.pk %}">Editar</a>
+                        <span class="book-arrow" aria-hidden="true">↗</span>
+                    </div>
                 </article>
             {% empty %}
                 <div class="empty-state">
