@@ -6,7 +6,11 @@
     <section class="author-profile">
         <a class="back-link" href="{% url 'book_list' %}"><span aria-hidden="true">←</span> Voltar ao acervo</a>
         <div class="profile-heading">
-            <div class="profile-monogram" aria-hidden="true">{{ book.title|first|upper }}</div>
+            {% if book.cover %}
+                <img src="{{ book.cover.url }}" alt="Capa do livro {{ book.title }}" class="book-cover-detail">
+            {% else %}
+                <div class="profile-monogram" aria-hidden="true">{{ book.title|first|upper }}</div>
+            {% endif %}
             <div>
                 <p class="eyebrow"><span class="eyebrow-rule"></span> LIVRO · ACERVO ENTRELINHAS</p>
                 <h1>{{ book.title }}</h1>

@@ -21,3 +21,4 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ("available", "author", "categories")
     search_fields = ("title", "author__name")
     filter_horizontal = ("categories",)
+    fields = ("title", "author", "year", "available", "categories", "cover")

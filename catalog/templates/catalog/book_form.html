@@ -20,7 +20,7 @@
                         <p>Os campos com <span aria-hidden="true">*</span> são obrigatórios.</p>
                     </div>
                 </div>
-                <form method="post" class="author-form" novalidate>
+                <form method="post" class="author-form" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     <div class="form-field{% if form.title.errors %} has-error{% endif %}">
@@ -52,6 +52,16 @@
                             {{ form.categories }}
                         </div>
                         {{ form.categories.errors }}
+                    </div>
+                    <div class="form-field{% if form.cover.errors %} has-error{% endif %}">
+                        {{ form.cover.label_tag }}
+                        {{ form.cover }}
+                        {% if form.instance.cover %}
+                            <div class="current-cover">
+                                <img src="{{ form.instance.cover.url }}" alt="Capa atual" class="book-cover-preview">
+                            </div>
+                        {% endif %}
+                        {{ form.cover.errors }}
                     </div>
                     <button class="button button-green submit-button" type="submit">{{ submit_label }} <span aria-hidden="true">↗</span></button>
                 </form>

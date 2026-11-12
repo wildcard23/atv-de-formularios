@@ -13,7 +13,7 @@ def book_form(request, pk=None):
     book = get_object_or_404(Book, pk=pk) if pk is not None else None
 
     if request.method == "POST":
-        form = BookForm(request.POST, instance=book)
+        form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             book = form.save()
             return redirect("author_detail", pk=book.author.pk)

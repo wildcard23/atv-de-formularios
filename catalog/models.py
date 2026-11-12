@@ -22,6 +22,7 @@ class Book(models.Model):
     year = models.PositiveIntegerField()
     available = models.BooleanField(default=True)
     categories = models.ManyToManyField(Category, blank=True, related_name="books")
+    cover = models.ImageField(upload_to="covers/", blank=True, null=True)
 
     def __str__(self):
         return self.title

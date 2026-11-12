@@ -25,16 +25,18 @@ class BookForm(forms.ModelForm):
 
     class Meta:
         model = Book
-        fields = ["title", "author", "year", "available", "categories"]
+        fields = ["title", "author", "year", "available", "categories", "cover"]
         labels = {
             "title": "Título",
             "author": "Autor",
             "year": "Ano",
             "available": "Disponível",
             "categories": "Categorias",
+            "cover": "Capa do livro",
         }
         widgets = {
             "available": forms.CheckboxInput,
+            "cover": forms.ClearableFileInput(attrs={"accept": "image/*"}),
         }
 
     def clean_title(self):
