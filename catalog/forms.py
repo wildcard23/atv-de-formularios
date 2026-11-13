@@ -55,3 +55,19 @@ class BookForm(forms.ModelForm):
                 f"O ano do livro não pode ser posterior ao ano atual ({date.today().year}). Corrija o ano informado."
             )
         return year
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name"]
+        labels = {"name": "Nome da categoria"}
+
+    def clean_name(self):
+        name = self.cleaned_data.get("name", "")
+        cleaned_name = " ".join(name.split())
+        if len(cleaned_name) < 2:
+            raise forms.ValidationError(
+                "O nome da categoria deve ter pelo menos 2 caracteres após remover espaços extras."
+            )
+        return cleaned_name

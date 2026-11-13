@@ -1,0 +1,38 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <section class="form-page">
+        <a class="back-link" href="{% url 'book_list' %}"><span aria-hidden="true">←</span> Voltar ao acervo</a>
+        <div class="form-layout">
+            <div class="form-intro">
+                <p class="eyebrow"><span class="eyebrow-rule"></span> {% if is_edit %}ATUALIZAÇÃO{% else %}NOVO REGISTRO{% endif %} · 04</p>
+                <h1>{{ heading|safe }}</h1>
+                <p>{{ description }}</p>
+                <span class="form-decoration" aria-hidden="true">“</span>
+            </div>
+            <div class="form-panel">
+                <div class="form-panel-heading">
+                    <span class="step-number">01</span>
+                    <div>
+                        <h2>Dados da categoria</h2>
+                        <p>Os campos com <span aria-hidden="true">*</span> são obrigatórios.</p>
+                    </div>
+                </div>
+                <form method="post" class="author-form" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-field{% if form.name.errors %} has-error{% endif %}">
+                        {{ form.name.label_tag }}
+                        <span class="required-mark" aria-hidden="true">*</span>
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                    <button class="button button-green submit-button" type="submit">{{ submit_label }} <span aria-hidden="true">↗</span></button>
+                </form>
+                <p class="form-note"><span aria-hidden="true">✳</span> Organize o acervo por assunto.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}

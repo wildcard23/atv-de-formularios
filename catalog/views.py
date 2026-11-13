@@ -1,7 +1,14 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import AuthorForm, BookForm
-from .models import Author, Book
+from .forms import AuthorForm, BookForm, CategoryForm
+from .models import Author, Book, Category
+
+
+def _safe_redirect_path(request, fallback="book_list"):
+    next_url = request.POST.get("next") or request.GET.get("next") or ""
+    if next_url.startswith("/"):
+        return next_url
+    return fallback
 
 
 def book_list(request):
@@ -13,6 +20,27 @@ def book_form(request, pk=None):
     book = get_object_or_404(Book, pk=pk) if pk is not None else None
 
     if request.method == "POST":
+        if "create_category" in request.POST:
+            category_form = CategoryForm(request.POST)
+            if category_form.is_valid():
+                category_form.save()
+                return redirect("book_create")
+            else:
+                form = BookForm(request.POST, request.FILES, instance=book)
+                return render(
+                    request,
+                    "catalog/book_form.html",
+                    {
+                        "form": form,
+                        "category_form": category_form,
+                        "page_title": "Editar livro" if book is not None else "Novo livro",
+                        "heading": "Atualize os dados<br>do livro." if book is not None else "Uma nova história<br>precisa de um <em>livro.</em>",
+                        "description": "Ajuste o título, o ano, a disponibilidade e as categorias da obra." if book is not None else "Cadastre o título, escolha o autor, informe o ano e as categorias da obra.",
+                        "submit_label": "Salvar alterações" if book is not None else "Salvar livro",
+                        "is_edit": book is not None,
+                    },
+                )
+
         form = BookForm(request.POST, request.FILES, instance=book)
         if form.is_valid():
             book = form.save()
@@ -26,6 +54,7 @@ def book_form(request, pk=None):
         "catalog/book_form.html",
         {
             "form": form,
+            "category_form": CategoryForm(),
             "page_title": "Editar livro" if is_edit else "Novo livro",
             "heading": "Atualize os dados<br>do livro." if is_edit else "Uma nova história<br>precisa de um <em>livro.</em>",
             "description": "Ajuste o título, o ano, a disponibilidade e as categorias da obra." if is_edit else "Cadastre o título, escolha o autor, informe o ano e as categorias da obra.",
@@ -120,3 +149,62 @@ def author_delete(request, pk):
 def author_detail(request, pk):
     author = get_object_or_404(Author, pk=pk)
     return render(request, "catalog/author_detail.html", {"author": author})
+
+
+def category_create(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            category = form.save()
+            return redirect("book_list")
+    else:
+        form = CategoryForm()
+
+    return render(
+        request,
+        "catalog/category_form.html",
+        {
+            "form": form,
+            "page_title": "Nova categoria",
+            "submit_label": "Salvar categoria",
+            "heading": "Uma nova classificação<br>para o acervo.",
+            "description": "Cadastre uma categoria para organizar melhor os livros e facilitar a busca.",
+            "is_edit": False,
+        },
+    )
+
+
+def category_edit(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect("book_list")
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(
+        request,
+        "catalog/category_form.html",
+        {
+            "form": form,
+            "page_title": "Editar categoria",
+            "submit_label": "Salvar alterações",
+            "heading": "Atualize a categoria<br>do acervo.",
+            "description": "Ajuste o nome da categoria para manter a organização do catálogo atualizada.",
+            "is_edit": True,
+            "category": category,
+        },
+    )
+
+
+def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+
+    if request.method == "POST":
+        category.delete()
+        return redirect("book_list")
+
+    return redirect("book_list")

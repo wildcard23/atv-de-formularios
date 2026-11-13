@@ -63,6 +63,12 @@
                         {% endif %}
                         {{ form.cover.errors }}
                     </div>
+                    <div class="form-field{% if category_form.name.errors %} has-error{% endif %}">
+                        {{ category_form.name.label_tag }}
+                        <button type="submit" name="create_category" value="1" class="button button-coral small-button">Adicionar categoria</button>
+                        {{ category_form.name }}
+                        {{ category_form.name.errors }}
+                    </div>
                     <button class="button button-green submit-button" type="submit">{{ submit_label }} <span aria-hidden="true">↗</span></button>
                 </form>
                 <p class="form-note"><span aria-hidden="true">✳</span> Um título, um autor, uma boa leitura.</p>
